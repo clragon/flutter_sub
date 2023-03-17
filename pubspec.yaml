@@ -2,7 +2,7 @@ name: flutter_sub
 description: Idiomatic State Lifecycles for Flutter. Part of the State, part of the Tree.
 repository: https://github.com/clragon/flutter_sub/
 
-version: 0.1.0+1
+version: 0.2.0+2
 
 environment:
   sdk: ">=2.17.0 <3.0.0"

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sub/developer.dart';
+import 'package:flutter_sub/flutter_sub.dart';
 
 class SubTabController extends SubDisposableListenable<TabController>
     with SubSingleTickProviderMixin<TabController> {
