@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_sub/developer.dart';
 import 'package:flutter_sub/flutter_sub.dart';
 
 class SubAnimator<T> extends SubValueListener<T> {
@@ -41,7 +42,7 @@ class SubAnimationController extends SubValue<AnimationController>
     TickerProvider? vsync,
     AnimationBehavior animationBehavior = AnimationBehavior.normal,
     required super.builder,
-    super.keys,
+    SubValueKeys? keys,
   }) : super.builder(
           create: (context) => AnimationController(
             value: initialValue,
@@ -63,6 +64,7 @@ class SubAnimationController extends SubValue<AnimationController>
             }
             return previous;
           },
+          keys: keys != null ? (context) => keys : null,
           dispose: (context, value) => value.dispose(),
         );
 }
