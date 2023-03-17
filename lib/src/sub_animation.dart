@@ -2,15 +2,18 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_sub/developer.dart';
 import 'package:flutter_sub/flutter_sub.dart';
 
+/// Subscribes to an [Animation] and returns its value.
+///
+/// This is a Wrapper around [SubValueListener].
+///
+/// See also:
+/// - [Animation]
+/// - [SubValueListener], [SubListener], [SubStream]
 class SubAnimator<T> extends SubValueListener<T> {
   /// Subscribes to an [Animation] and returns its value.
   ///
   /// - The optional [listener] is called when the listenable notifies.
   /// - If [initialize] is true, then [listener] is also called once this Widget is built for the first time.
-  ///
-  /// See also:
-  /// - [Animation]
-  /// - [SubValueListener], [SubListener], [SubStream]
   SubAnimator({
     required Animation<T> animation,
     required super.builder,
@@ -19,6 +22,13 @@ class SubAnimator<T> extends SubValueListener<T> {
   }) : super(listenable: animation);
 }
 
+/// Creates an [AnimationController] and automatically disposes it when necessary.
+///
+/// Will automatically create a [SubSingleTickProviderMixin] as a [TickerProvider], if none is provided.
+///
+/// See also:
+/// - [AnimationController], the created object.
+/// - [SubAnimator], to listen to the created [AnimationController].
 class SubAnimationController extends SubValue<AnimationController>
     with SubSingleTickProviderMixin<AnimationController> {
   /// Creates an [AnimationController] and automatically disposes it when necessary.
@@ -28,10 +38,6 @@ class SubAnimationController extends SubValue<AnimationController>
   /// Changing the [duration] parameter automatically updates the [AnimationController.duration].
   ///
   /// [initialValue], [lowerBound], [upperBound] and [debugLabel] are ignored after the first call.
-  ///
-  /// See also:
-  /// - [AnimationController], the created object.
-  /// - [SubAnimator], to listen to the created [AnimationController].
   SubAnimationController({
     Duration? duration,
     Duration? reverseDuration,

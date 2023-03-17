@@ -1,3 +1,8 @@
+## 0.3.0
+
+- Updated documentation
+- Fixed SubAnimationController parameters
+
 ## 0.2.0+2
 
 - Removed extra exports from developer

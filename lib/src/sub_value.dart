@@ -2,36 +2,37 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_sub/src/sub_value_state.dart';
 import 'package:flutter_sub/src/types.dart';
 
+/// Creates, recreates, updates and disposes a Value T.
+///
+/// [SubValue] calls [create] to create a value.
+/// The created value is provided to its child widgets through the [builder].
+///
+/// Changing the return value of [keys] will trigger another call to [create].
+/// The updated value is then passed to [builder] and the widget is rebuilt.
+/// If no value is passed for [keys], the value is created once only and persist for the lifetime of this widget.
+///
+/// The value can be updated by specifying the [update] parameter.
+/// This is useful if the created value is a controller, and its values rely on other variables up in the tree.
+///
+/// To release any allocated resources, the value can be disposed with the [dispose] callback.
+/// [dispose] is called for every value that is discarded when [keys] change and once this widget is disposed entirely.
+///
+/// The following example [SubValue] shows an example of creating a Stream for a search from our database.
+/// The stream is recreated when either the database or the search changes.
+/// The Stream can then be used in a StreamBuilder. The stream is appropriately kept in a State while we do not need an extra StatefulWidget.
+///
+/// ```dart
+/// return SubValue(
+///   create: () => database.findItems(search),
+///   keys: [database, search],
+///   builder: (context, stream) => StreamBuilder(
+///     stream: stream,
+///     builder: (context, snapshot) => /* ... */,
+///   ),
+/// );
+/// ```
 class SubValue<T> extends StatefulWidget {
   /// Creates, recreates, updates and disposes a Value T.
-  ///
-  /// [SubValue] calls [create] to create a value.
-  /// The created value is provided to its child widgets through the [builder].
-  ///
-  /// Changing the return value of [keys] will trigger another call to [create].
-  /// The updated value is then passed to [builder] and the widget is rebuilt.
-  /// If no value is passed for [keys], the value is created once only and persist for the lifetime of this widget.
-  ///
-  /// The value can be updated by specifying the [update] parameter.
-  /// This is useful if the created value is a controller, and its values rely on other variables up in the tree.
-  ///
-  /// To release any allocated resources, the value can be disposed with the [dispose] callback.
-  /// [dispose] is called for every value that is discarded when [keys] change and once this widget is disposed entirely.
-  ///
-  /// The following example [SubValue] shows an example of creating a Stream for a search from our database.
-  /// The stream is recreated when either the database or the search changes.
-  /// The Stream can then be used in a StreamBuilder. The stream is appropriately kept in a State while we do not need an extra StatefulWidget.
-  ///
-  /// ```dart
-  /// return SubValue(
-  ///   create: () => database.findItems(search),
-  ///   keys: [database, search],
-  ///   builder: (context, stream) => StreamBuilder(
-  ///     stream: stream,
-  ///     builder: /* ... */,
-  ///   ),
-  /// );
-  /// ```
   ///
   /// See also:
   /// - [SubValue.builder], which also passes [BuildContext].
@@ -50,7 +51,7 @@ class SubValue<T> extends StatefulWidget {
 
   /// Creates, recreates, updates and disposes a Value T.
   ///
-  /// The same as SubValue, but also passes [BuildContext] for its operations.
+  /// The same as [SubValue], but also passes [BuildContext] for its operations.
   /// This is useful when creating [SubValue]s which depend on [InheritedWidget].
   ///
   /// See also:

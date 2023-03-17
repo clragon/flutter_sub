@@ -1,6 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_sub/src/sub_listenable.dart';
 
+/// Creates and disposes a [TextEditingController].
+///
+/// See also:
+/// - [TextEditingController]
 class SubTextEditingController
     extends SubDisposableListenable<TextEditingController> {
   /// Creates and disposes a [TextEditingController].

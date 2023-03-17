@@ -17,6 +17,7 @@ void main() {
         SubTabController(
           initialIndex: index,
           initialLength: length,
+          keys: const [],
           builder: mock,
         ),
       );

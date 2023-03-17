@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_sub/src/collection.dart';
 import 'package:flutter_sub/src/sub_value.dart';
 
+/// The [State] of a [SubValue].
+/// Can be extended for special cases where a [SubValue] with a Mixin is desired.
 class SubValueState<T> extends State<SubValue<T>> {
   /// The current keys for the value of this Builder.
   @protected

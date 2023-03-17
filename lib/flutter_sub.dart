@@ -1,3 +1,6 @@
+/// Idiomatic State Lifecycles for Flutter. Part of the State, part of the Tree.
+library flutter_sub;
+
 export 'src/sub_animation.dart';
 export 'src/sub_focus.dart';
 export 'src/sub_future.dart';

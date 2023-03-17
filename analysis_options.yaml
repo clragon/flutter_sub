@@ -172,5 +172,3 @@ linter:
     - use_to_and_as_if_applicable
     - valid_regexps
     - void_checks
-    - overridden_fields: false
-    - avoid_classes_with_only_static_members: false

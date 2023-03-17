@@ -1,11 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_sub/flutter_sub.dart';
 
+/// Creates and disposes a [FocusNode].
+///
+/// See also:
+/// - [FocusNode]
 class SubFocusNode extends SubDisposableListenable<FocusNode> {
   /// Creates and disposes a [FocusNode].
-  ///
-  /// See also:
-  /// - [FocusNode]
   SubFocusNode({
     String? debugLabel,
     FocusOnKeyCallback? onKey,
@@ -33,11 +34,12 @@ class SubFocusNode extends SubDisposableListenable<FocusNode> {
         );
 }
 
+/// Creates and disposes a [FocusScopeNode].
+///
+/// See also:
+/// - [FocusScopeNode]
 class SubFocusScopeNode extends SubDisposableListenable<FocusScopeNode> {
   /// Creates and disposes a [FocusScopeNode].
-  ///
-  /// See also:
-  /// - [FocusScopeNode]
   SubFocusScopeNode({
     String? debugLabel,
     FocusOnKeyCallback? onKey,

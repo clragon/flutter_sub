@@ -1,6 +1,22 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_sub/flutter_sub.dart';
 
+/// Subscribes to a [Listenable].
+///
+/// This Widget is similar to a [AnimatedBuilder].
+/// Additionally, it allows attaching a callback that is called whenever the [listenable] notifies.
+///
+/// Example usage looks like this:
+///
+/// ```dart
+/// return SubListener(
+///   listanble: myChangeNotifier,
+///   listener: () => print('notifier has fired!'),
+///   builder: (context) => /* ... */,
+/// );
+/// ```
+///
+/// The listener is automatically attached and detached.
 class SubListener extends StatelessWidget {
   /// Subscribes a callback to a [Listenable].
   ///
@@ -40,6 +56,7 @@ class SubListener extends StatelessWidget {
   }
 }
 
+/// Holds the state for a [SubListener].
 @immutable
 class _SubListenerState {
   /// Holds the state for a [SubListener].
@@ -70,6 +87,8 @@ class _SubListenerState {
   }
 }
 
+/// A [SubValue] which holds a Value that is a descendant of [ChangeNotifier].
+/// The dispose method is automatically handled.
 abstract class SubDisposableListenable<T extends ChangeNotifier>
     extends SubValue<T> {
   /// Automatically disposes its ChangeNotifier.
