@@ -1,3 +1,7 @@
+## 1.0.0
+
+- Full release
+
 ## 0.3.0
 
 - Updated documentation
