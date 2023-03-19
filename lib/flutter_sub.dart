@@ -2,10 +2,12 @@
 library flutter_sub;
 
 export 'src/sub_animation.dart';
+export 'src/sub_app_lifecycle_state.dart';
+export 'src/sub_effect.dart';
 export 'src/sub_focus.dart';
 export 'src/sub_future.dart';
 export 'src/sub_listenable.dart';
-export 'src/sub_memo.dart';
+export 'src/sub_memoized.dart';
 export 'src/sub_page_controller.dart';
 export 'src/sub_platform_brightness.dart';
 export 'src/sub_scroll_controller.dart';

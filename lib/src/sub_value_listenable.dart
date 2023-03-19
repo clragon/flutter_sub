@@ -70,16 +70,21 @@ class SubValueListener<T> extends SubListener {
 class SubValueNotifier<T> extends SubDisposableListenable<ValueNotifier<T>> {
   /// Creates and subscribes to a [ValueNotifier], then exposes its current state.
   /// The notifier is automatically disposed.
+  ///
+  /// - The optional [listener] is called when the listenable notifies.
+  /// - If [initialize] is true, then [listener] is also called once this Widget is built for the first time.
   SubValueNotifier({
     required T initialData,
     required SubValueBuild<ValueNotifier<T>> builder,
     ValueChanged<T>? listener,
+    bool initialize = false,
     super.keys,
   }) : super(
           create: () => ValueNotifier<T>(initialData),
           builder: (context, notifier) => SubValueListener<T>(
             listenable: notifier,
             listener: listener,
+            initialize: initialize,
             builder: (context, value) => builder(context, notifier),
           ),
         );
