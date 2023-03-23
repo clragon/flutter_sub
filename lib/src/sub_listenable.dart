@@ -49,7 +49,7 @@ class SubListener extends StatelessWidget {
         listener: listener,
         initialize: initialize,
       ),
-      keys: [listenable, listener, initialize],
+      keys: [listenable],
       dispose: (value) => value.dispose(),
       builder: (context, _) => builder(context),
     );

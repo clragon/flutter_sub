@@ -1,3 +1,7 @@
+## 1.0.1
+
+- Fixed an issue with SubListenable calling its listener too much
+
 ## 1.0.0
 
 - Full release
