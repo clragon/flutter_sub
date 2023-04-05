@@ -23,7 +23,8 @@ class SubListener extends StatelessWidget {
   /// - The optional [listener] is called when the listenable notifies.
   /// - If [initialize] is true, then [listener] is also called once this Widget is built for the first time.
   const SubListener({
-    required this.builder,
+    @required this.child,
+    @Deprecated('Use the child Parameter instead') this.builder,
     required this.listenable,
     this.listener,
     this.initialize = false,
@@ -38,11 +39,20 @@ class SubListener extends StatelessWidget {
   /// Whether to call [listener] when the [SubListener] is created initially.
   final bool initialize;
 
+  /// The widget below this one.
+  final Widget? child;
+
   /// Builds the widget below this one.
-  final WidgetBuilder builder;
+  @Deprecated('Use the child Parameter instead')
+  final WidgetBuilder? builder;
 
   @override
   Widget build(BuildContext context) {
+    assert(
+      // ignore: deprecated_member_use_from_same_package
+      builder != null || child != null,
+      '$runtimeType must have a child widget!',
+    );
     return SubValue<_SubListenerState>(
       create: () => _SubListenerState(
         listenable: listenable,
@@ -51,7 +61,8 @@ class SubListener extends StatelessWidget {
       ),
       keys: [listenable],
       dispose: (value) => value.dispose(),
-      builder: (context, _) => builder(context),
+      // ignore: deprecated_member_use_from_same_package
+      builder: (context, _) => builder?.call(context) ?? child!,
     );
   }
 }

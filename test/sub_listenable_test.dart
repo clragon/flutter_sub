@@ -6,8 +6,6 @@ import 'mock.dart';
 
 void main() {
   group('SubListener', () {
-    Container mockBuilder(BuildContext context) => Container();
-
     testWidgets('calls its listener', (tester) async {
       final notifier = ValueNotifier(0);
       int counter = 0;
@@ -16,7 +14,7 @@ void main() {
         SubListener(
           listenable: notifier,
           listener: () => counter++,
-          builder: mockBuilder,
+          child: const SizedBox(),
         ),
       );
 
@@ -40,11 +38,27 @@ void main() {
           initialize: true,
           listenable: notifier,
           listener: () => counter++,
-          builder: mockBuilder,
+          child: const SizedBox(),
         ),
       );
 
       expect(counter, 1);
+    });
+
+    testWidgets('throws if neither child nor builder are used', (tester) async {
+      final notifier = ValueNotifier(0);
+      int counter = 0;
+
+      await tester.pumpWidget(
+        // ignore: missing_required_param
+        SubListener(
+          initialize: true,
+          listenable: notifier,
+          listener: () => counter++,
+        ),
+      );
+
+      expect(tester.takeException(), isAssertionError);
     });
   });
 

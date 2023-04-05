@@ -1,3 +1,7 @@
+## 1.0.2
+
+- Fixed SubListenanble requiring a builder instead of a child
+
 ## 1.0.1
 
 - Fixed an issue with SubListenable calling its listener too much
