@@ -24,16 +24,16 @@ class SubAnimator<T> extends SubValueListener<T> {
 
 /// Creates an [AnimationController] and automatically disposes it when necessary.
 ///
-/// Will automatically create a [SubSingleTickProviderMixin] as a [TickerProvider], if none is provided.
+/// Will automatically create a [SubTickerProviderMixin] as a [TickerProvider], if none is provided.
 ///
 /// See also:
 /// - [AnimationController], the created object.
 /// - [SubAnimator], to listen to the created [AnimationController].
 class SubAnimationController extends SubValue<AnimationController>
-    with SubSingleTickProviderMixin<AnimationController> {
+    with SubTickerProviderMixin<AnimationController> {
   /// Creates an [AnimationController] and automatically disposes it when necessary.
   ///
-  /// If no [vsync] is provided, the [TickerProvider] is implicitly obtained using a [SubSingleTickProviderMixin].
+  /// If no [vsync] is provided, the [TickerProvider] is implicitly obtained using a [SubTickerProviderMixin].
   ///
   /// Changing the [duration] parameter automatically updates the [AnimationController.duration].
   ///

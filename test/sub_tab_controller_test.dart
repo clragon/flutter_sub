@@ -37,7 +37,7 @@ void main() {
         ),
       );
       await tester.pumpWidget(
-        SubSingleTickProvider(builder: (_, value) {
+        SubTickerProvider(builder: (_, value) {
           controller = TabController(length: 4, vsync: value);
           return Container();
         }),

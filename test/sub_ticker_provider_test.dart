@@ -5,13 +5,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'mock.dart';
 
 void main() {
-  group('SubSingleTickProvider', () {
-    testWidgets('correctly creates a single use TickerProvider',
-        (tester) async {
+  group('SubTickerProvider', () {
+    testWidgets('correctly creates a TickerProvider', (tester) async {
       final mock = MockBuilder<TickerProvider>();
       await tester.pumpWidget(TickerMode(
         enabled: true,
-        child: SubSingleTickProvider(
+        child: SubTickerProvider(
           builder: mock,
         ),
       ));
@@ -20,9 +19,12 @@ void main() {
           vsync: mock.single, duration: const Duration(seconds: 1))
         ..forward();
 
-      expect(() => AnimationController(vsync: mock.single), throwsFlutterError);
+      final animationController2 = AnimationController(
+          vsync: mock.single, duration: const Duration(seconds: 1))
+        ..forward();
 
       animationController.dispose();
+      animationController2.dispose();
 
       await tester.pumpWidget(const SizedBox());
     });

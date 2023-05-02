@@ -7,7 +7,7 @@ import 'package:flutter_sub/flutter_sub.dart';
 /// See also:
 /// - [TabController]
 class SubTabController extends SubDisposableListenable<TabController>
-    with SubSingleTickProviderMixin<TabController> {
+    with SubTickerProviderMixin<TabController> {
   /// Creates and disposes a [TabController].
   SubTabController({
     required int initialLength,
