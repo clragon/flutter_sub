@@ -12,8 +12,8 @@ import 'package:flutter_sub/flutter_sub.dart';
 class SubAnimator<T> extends SubValueListener<T> {
   /// Subscribes to an [Animation] and returns its value.
   ///
-  /// - The optional [listener] is called when the listenable notifies.
-  /// - If [initialize] is true, then [listener] is also called once this Widget is built for the first time.
+  /// - The optional listener is called when the listenable notifies.
+  /// - If initialize is true, then listener is also called once this Widget is built for the first time.
   SubAnimator({
     required Animation<T> animation,
     required super.builder,
