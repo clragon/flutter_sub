@@ -13,6 +13,7 @@ import 'package:flutter_sub/src/types.dart';
 class SubStream<T> extends SubValue<Stream<T>> {
   /// Creates and subscribes to a [Stream], then exposes its current state as an [AsyncSnapshot].
   ///
+  /// * [listener] is called with every event the stream emits.
   /// * [preserveState] determines if the current value should be preserved when changing
   /// the [Stream] instance.
   ///
@@ -25,15 +26,24 @@ class SubStream<T> extends SubValue<Stream<T>> {
     super.update,
     T? initialData,
     bool preserveState = true,
+    ValueChanged<T>? listener,
     required SubValueBuild<AsyncSnapshot<T>> builder,
   }) : super(
-          builder: (context, stream) => StreamBuilder<T>(
-            initialData: initialData,
-            stream: stream,
-            builder: preservedSnapshotBuilder(
-              preserveState: preserveState,
-              initialData: initialData,
-              builder: builder,
+          builder: (context, stream) => SubValue<Stream<T>>(
+            create: () => stream.asBroadcastStream(),
+            keys: [stream],
+            builder: (context, stream) => SubSubscriber<T>(
+              stream: stream,
+              listener: listener,
+              child: StreamBuilder<T>(
+                initialData: initialData,
+                stream: stream,
+                builder: preservedSnapshotBuilder(
+                  preserveState: preserveState,
+                  initialData: initialData,
+                  builder: builder,
+                ),
+              ),
             ),
           ),
         );

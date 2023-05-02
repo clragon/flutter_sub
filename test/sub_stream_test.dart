@@ -75,6 +75,25 @@ void main() {
       await tester.pumpWidget(builder(stream));
       expect(mock.last.data, 1);
     });
+
+    testWidgets('adds listener to stream', (tester) async {
+      final mock = MockBuilder<AsyncSnapshot<int>>();
+      Stream<int> stream = Stream.value(0);
+      int? value;
+      Widget builder(Stream<int> stream) => SubStream<int>(
+            create: () => stream,
+            update: (_) => stream,
+            listener: (event) => value = event,
+            builder: mock,
+          );
+
+      await tester.pumpWidget(builder(stream));
+      expect(mock.last.data, null);
+      expect(value, 0);
+      await tester.pumpWidget(builder(stream));
+      expect(mock.last.data, 0);
+      expect(value, 0);
+    });
   });
 
   group('SubStreamController', () {

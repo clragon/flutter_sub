@@ -14,6 +14,7 @@ export 'src/sub_scroll_controller.dart';
 export 'src/sub_single_tick_provider.dart';
 export 'src/sub_state.dart';
 export 'src/sub_stream.dart';
+export 'src/sub_subscriber.dart';
 export 'src/sub_tab_controller.dart';
 export 'src/sub_text_controller.dart';
 export 'src/sub_transformation_controller.dart';
