@@ -9,12 +9,60 @@ as well as reusable state (similar to hooks) for Flutter.
 
 A Sub is a compact version of a StatefulWidget that creates, updates and disposes a Value.
 
+### Overview
+
+- [Flutter Sub](#flutter-sub)
+  - [Motivation](#motivation)
+  - [Principle](#principle)
+  - [Hooks](#hooks)
+- [Custom subs](#custom-subs)
+  - [SubValue](#subvalue)
+  - [Widgets in Builder](#widgets-in-builder)
+  - [SubValue.builder](#subvaluebuilder)
+  - [SubValueState](#subvaluestate)
+- [Inbuilt Subs](#inbuilt-subs)
+  - [Async Subs](#async-subs)
+  - [Animation Subs](#animation-subs)
+  - [Listenable Subs](#listenable-subs)
+  - [Other Subs](#other-subs)
+  - [Hook-alikes](#hook-alikes)
+
 ## Motivation
 
 Because almost all State in Flutter is bound to the tree, it is reasonable
 to come accross the requirement of creating State which depends on other State.
 
-As an example, a Widget which displays results from a database stream:
+Here is how you create a stream from your database that is automatically recreated when the search changes in flutter_sub:
+
+```dart
+class Example extends StatelessWidget {
+  const Example({
+    super.key,
+    required this.search,
+    required this.database,
+  });
+
+  final String search;
+  final Database dabatase;
+
+  @override
+  Widget build(BuildContext context) {
+    return SubStream<String>(
+      create: () => database.search(widget.search),
+      keys: [database, search],
+      builder: (context, result) => /* ... */,
+    );
+  }
+}
+```
+
+Pretty simple, right?
+If the search or database parameters change, our stream is recreated.
+
+The `SubStream` Widget takes care of creation the stream
+and automatically recreates it whenever one of our dependencies, listed in `keys` changes.
+
+Here is the same code without flutter_sub:
 
 ```dart
 class Example extends StatefulWidget {
@@ -59,37 +107,8 @@ class _ExampleState extends State<Example> {
 }
 ```
 
-If the search or database parameters change, the UI should reflect this,
-therefore we implement `didUpdateWidget`.
-
-Writing methods like `didUpdateWidget` can be very tedious and repetetive.
-
-The Sub Widgets simplify this process:
-
-```dart
-class Example extends StatelessWidget {
-  const Example({
-    super.key,
-    required this.search,
-    required this.database,
-  });
-
-  final String search;
-  final Database dabatase;
-
-  @override
-  Widget build(BuildContext context) {
-    return SubStream<String>(
-      create: () => database.search(widget.search),
-      keys: [database, search],
-      builder: /* ... */,
-    );
-  }
-}
-```
-
-The `SubStream` Widget takes care of creation the stream
-and automatically recreates it whenever one of our dependencies, listed in `keys` changes.
+In a normal StatefulWidget, we have to implement `didUpdateWidget` and check every value manually.
+This can lead to very repetetive and long code. The Sub Widgets simplify this process.
 
 ## Principle
 
@@ -146,14 +165,17 @@ Some hooks may not have an equivalent Sub or the Sub may function slightly diffe
 
 ## Custom Subs
 
-Its possible to directly use `SubValue` in your code. If you however wish to create reusable Subs, read ahead.
+The package comes with many [inbuilt](#inbuilt-subs) and ready-to-use Subs.
+Its also possible to directly use `SubValue` in your code.
+
+If you however wish to create your own reusable Subs, read ahead.
 
 You can get access to `SubValueBuild` and other internal types by importing `package:flutter_sub/developer.dart`.
 
 ### SubValue
 
 To create your own Subs easily, you can extend the `SubValue` class.
-For example, a simple implementation of `SubTextEditingController` can look something like this:
+For example, a simple implementation of [`SubTextEditingController`](#other-subs) can look something like this:
 
 ```dart
 class SubTextEditingController extends SubValue<TextEditingController> {
@@ -172,7 +194,7 @@ class SubTextEditingController extends SubValue<TextEditingController> {
 
 If you would like to include an extra Widget inside your custom Sub, you can do so by adding it to the builder.
 
-Here is an example of a `SubValueNotifier` that includes a `ValueListenableBuilder`, so that its child is automatically rebuilt:
+Here is an example of a [`SubValueNotifier`](#listenable-subs) that includes a `ValueListenableBuilder`, so that its child is automatically rebuilt:
 
 ```dart
 class SubValueNotifier<T> extends SubValue<ValueNotifier<T>> {
@@ -197,36 +219,38 @@ If your custom Sub needs access to `BuildContext`, for example to access an `Inh
 
 ### SubValueState
 
-If you have even more special requirements like having a special Mixin on your `State`, you can extend the `SubValueState` of your `SubValue`. An example of this can be seen in [SubSingleTickProviderMixin](./lib/src/sub_single_tick_provider.dart).
+If you have even more special requirements like having a special Mixin on your `State`, you can extend the `SubValueState` of your `SubValue`. An example of this can be seen in [SubTickerProviderMixin](#animation-subs).
 
 This is provided for completeness sake. It might be easier to create a real `StatefulWidget` instead.
 
 ## Inbuilt Subs
 
-flutter_sub comes with the following inbuilt Subs for your convenience:
+The package comes with the following inbuilt Subs for your convenience:
 
-### State shortcuts
+### Async Subs
 
-Subs that ease the usage of inbuilt Flutter/Dart objects.
-Automatic disposal and updating of parameters included.
-
-#### Async Subs:
+Subs which help using Streams and Futures.
 
 | Name                                                                                                               | Description                                                                               |
 | ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
 | [SubStream](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubStream-class.html)                     | Creates and subscribes to a `Stream` and returns its current state as an `AsyncSnapshot`. |
 | [SubStreamController](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubStreamController-class.html) | Creates a `StreamController` which will automatically be disposed.                        |
+| [SubSubscriber](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubSubscriber-class.html)             | Subscribes a listener to a `Stream`.                                                      |
 | [SubFuture](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubFuture-class.html)                     | Creates and subscribes to a `Future` and returns its current state as an `AsyncSnapshot`. |
 
-#### Animation Subs:
+### Animation Subs
+
+Subs which help setting up Animations and ChangeNotifiers.
 
 | Name                                                                                                                     | Description                                                            |
 | ------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------- |
-| [SubSingleTickProvider](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubSingleTickProvider-class.html)   | Creates a single usage `TickerProvider`.                               |
+| [SubTickerProvider](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubTickerProvider-class.html)           | Creates a `TickerProvider`.                                            |
 | [SubAnimationController](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubAnimationController-class.html) | Creates an `AnimationController` which will be automatically disposed. |
 | [SubAnimator](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubAnimator-class.html)                       | Subscribes to an `Animation` and returns its value.                    |
 
-#### Listenable Subs:
+### Listenable Subs
+
+Subs which help using Listeners, ValueListeners and ValueNotifiers.
 
 | Name                                                                                                         | Description                                                                           |
 | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
@@ -234,7 +258,9 @@ Automatic disposal and updating of parameters included.
 | [SubValueListener](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubValueListener-class.html) | Subscribes to a `ValueListenable` and return its value.                               |
 | [SubValueNotifier](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubValueNotifier-class.html) | Creates a `ValueNotifier` which will be automatically disposed.                       |
 
-#### Other Subs:
+### Other Subs
+
+Subs which create and hold various other controllers and objects commonly used.
 
 | Name                                                                                                                               | Description                                                     |
 | ---------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
