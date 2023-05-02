@@ -17,6 +17,7 @@ class SubFuture<T> extends SubValue<Future<T>> {
     required super.create,
     super.keys,
     super.update,
+    super.dispose,
     T? initialData,
     bool preserveState = true,
     required SubValueBuild<AsyncSnapshot<T>> builder,
