@@ -4,7 +4,7 @@ import 'package:flutter_sub/flutter_sub.dart';
 /// Subscribes to a [Listenable].
 ///
 /// This Widget is similar to a [AnimatedBuilder].
-/// Additionally, it allows attaching a callback that is called whenever the [listenable] notifies.
+/// Additionally, it allows attaching a callback that is called whenever the listenable notifies.
 ///
 /// Example usage looks like this:
 ///
@@ -17,54 +17,26 @@ import 'package:flutter_sub/flutter_sub.dart';
 /// ```
 ///
 /// The listener is automatically attached and detached.
-class SubListener extends StatelessWidget {
+class SubListener extends SubValue<_SubListenerState> {
   /// Subscribes a callback to a [Listenable].
   ///
   /// - The optional [listener] is called when the listenable notifies.
   /// - If [initialize] is true, then [listener] is also called once this Widget is built for the first time.
-  const SubListener({
-    @required this.child,
-    @Deprecated('Use the child Parameter instead') this.builder,
-    required this.listenable,
-    this.listener,
-    this.initialize = false,
-  });
-
-  /// The listenable to which to attach [listener].
-  final Listenable listenable;
-
-  /// Called whenever [listenable] notifies.
-  final VoidCallback? listener;
-
-  /// Whether to call [listener] when the [SubListener] is created initially.
-  final bool initialize;
-
-  /// The widget below this one.
-  final Widget? child;
-
-  /// Builds the widget below this one.
-  @Deprecated('Use the child Parameter instead')
-  final WidgetBuilder? builder;
-
-  @override
-  Widget build(BuildContext context) {
-    assert(
-      // ignore: deprecated_member_use_from_same_package
-      builder != null || child != null,
-      '$runtimeType must have a child widget!',
-    );
-    return SubValue<_SubListenerState>(
-      create: () => _SubListenerState(
-        listenable: listenable,
-        listener: listener,
-        initialize: initialize,
-      ),
-      keys: [listenable],
-      dispose: (value) => value.dispose(),
-      // ignore: deprecated_member_use_from_same_package
-      builder: (context, _) => builder?.call(context) ?? child!,
-    );
-  }
+  SubListener({
+    required Widget child,
+    required Listenable listenable,
+    VoidCallback? listener,
+    bool initialize = false,
+  }) : super(
+          create: () => _SubListenerState(
+            listenable: listenable,
+            listener: listener,
+            initialize: initialize,
+          ),
+          keys: [listenable],
+          dispose: (value) => value.dispose(),
+          builder: (context, _) => child,
+        );
 }
 
 /// Holds the state for a [SubListener].
@@ -92,6 +64,7 @@ class _SubListenerState {
   /// Whether to call [listener] when the [SubListener] is created first.
   final bool initialize;
 
+  /// Cleans up the state.
   void dispose() {
     if (listener == null) return;
     listenable.removeListener(listener!);

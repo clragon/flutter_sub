@@ -8,7 +8,7 @@ import 'package:flutter_sub/src/types.dart';
 /// Subscribes to a [ValueListenable] and returns its value.
 ///
 /// This Widget is similar to a [ValueListenableBuilder].
-/// Additionally, it allows attaching a callback that is called whenever the [listenable] notifies.
+/// Additionally, it allows attaching a callback that is called whenever the listenable notifies.
 ///
 /// Example usage looks like this:
 ///
@@ -29,7 +29,7 @@ class SubValueListener<T> extends SubListener {
   /// Subscribes to a [ValueListenable] and returns its value.
   ///
   /// - The optional [listener] is called when the listenable notifies.
-  /// - If [initialize] is true, then [listener] is also called once this Widget is built for the first time.
+  /// - If initialize is true, then [listener] is also called once this Widget is built for the first time.
   SubValueListener({
     required ValueListenable<T> listenable,
     required SubValueBuild<T> builder,

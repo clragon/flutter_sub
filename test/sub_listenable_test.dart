@@ -44,22 +44,6 @@ void main() {
 
       expect(counter, 1);
     });
-
-    testWidgets('throws if neither child nor builder are used', (tester) async {
-      final notifier = ValueNotifier(0);
-      int counter = 0;
-
-      await tester.pumpWidget(
-        // ignore: missing_required_param
-        SubListener(
-          initialize: true,
-          listenable: notifier,
-          listener: () => counter++,
-        ),
-      );
-
-      expect(tester.takeException(), isAssertionError);
-    });
   });
 
   group('SubDisposableListenable', () {
