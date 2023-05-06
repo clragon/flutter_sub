@@ -16,15 +16,15 @@ import 'package:flutter_sub/src/types.dart';
 ///
 /// Widget build(BuildContext context) {
 ///   return SubEffect(
-///    effect: () {
-///      final subscription = stream.listen(print);
-///      // This will cancel the subscription when the widget is disposed
+///     effect: () {
+///       final subscription = stream.listen(print);
+///       // This will cancel the subscription when the widget is disposed
 ///       // or if the callback is called again.
-///      return subscription.cancel;
+///       return subscription.cancel;
 ///     },
 ///     // when the stream changes, useEffect will call the callback again.
-///    keys: [stream],
-///    child: /* ... */,
+///     keys: [stream],
+///     child: /* ... */,
 ///   );
 /// }
 /// ```

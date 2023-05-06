@@ -114,11 +114,11 @@ void main() {
 
     testWidgets('disposes values when theyre not needed anymore',
         (tester) async {
-      final dispose = DisposableMock();
-      final dispose2 = DisposableMock();
+      final dispose = MockValue();
+      final dispose2 = MockValue();
 
       await tester.pumpWidget(
-        SubValue<DisposableMock>(
+        SubValue<MockValue>(
           create: () => dispose,
           dispose: (value) => value.dispose(),
           builder: MockBuilder(),
@@ -128,7 +128,7 @@ void main() {
       expect(dispose.disposed, isFalse);
 
       await tester.pumpWidget(
-        SubValue<DisposableMock>(
+        SubValue<MockValue>(
           create: () => dispose,
           update: (previous) => dispose2,
           dispose: (value) => value.dispose(),

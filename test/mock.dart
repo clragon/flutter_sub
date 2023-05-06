@@ -28,18 +28,16 @@ class MockBuilder<T> extends Mock {
   }
 }
 
-class DisposableMock extends Mock {
+class MockValue extends Mock {
+  @override
+  String toString() => identityHashCode(this).toString();
+
   bool disposed = false;
 
   void dispose() {
     assert(!disposed, 'cannot dispose twice!');
     disposed = true;
   }
-}
-
-class MockValue extends Mock {
-  @override
-  String toString() => identityHashCode(this).toString();
 }
 
 Future<void> checkDisposal<T extends ChangeNotifier>(
