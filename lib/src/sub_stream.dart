@@ -30,7 +30,9 @@ class SubStream<T> extends SubValue<Stream<T>> {
     required SubValueBuild<AsyncSnapshot<T>> builder,
   }) : super(
           builder: (context, stream) => SubValue<Stream<T>>(
-            create: () => stream.asBroadcastStream(),
+            create: () => stream.asBroadcastStream(
+              onCancel: (subscription) => subscription.cancel(),
+            ),
             keys: [stream],
             builder: (context, stream) => SubSubscriber<T>(
               stream: stream,

@@ -94,6 +94,33 @@ void main() {
       expect(mock.last.data, 0);
       expect(value, 0);
     });
+
+    testWidgets('removes listeners from stream', (tester) async {
+      final mock = MockBuilder<AsyncSnapshot<int>>();
+      late final StreamController<int> controller;
+      controller = StreamController<int>(onCancel: () {
+        controller.close();
+      });
+
+      await tester.pumpWidget(
+        SubStream<int>(
+          create: () => controller.stream,
+          builder: mock,
+        ),
+      );
+
+      controller.add(0);
+      await tester.pumpWidget(
+        SubStream<int>(
+          create: () => controller.stream,
+          builder: mock,
+        ),
+      );
+
+      expect(mock.last.data, 0);
+      await tester.pumpWidget(const SizedBox());
+      expect(controller.isClosed, true);
+    });
   });
 
   group('SubStreamController', () {
