@@ -24,6 +24,7 @@ A Sub is a compact version of a StatefulWidget that creates, updates and dispose
   - [Async Subs](#async-subs)
   - [Animation Subs](#animation-subs)
   - [Listenable Subs](#listenable-subs)
+  - [Shortcut Subs](#shortcut-subs)
   - [Other Subs](#other-subs)
   - [Hook-alikes](#hook-alikes)
 
@@ -258,7 +259,7 @@ Subs which help using Listeners, ValueListeners and ValueNotifiers.
 | [SubValueListener](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubValueListener-class.html) | Subscribes to a `ValueListenable` and return its value.                               |
 | [SubValueNotifier](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubValueNotifier-class.html) | Creates a `ValueNotifier` which will be automatically disposed.                       |
 
-### Other Subs
+### Shortcut Subs
 
 Subs which create and hold various other controllers and objects commonly used.
 
@@ -272,6 +273,15 @@ Subs which create and hold various other controllers and objects commonly used.
 | [SubAppLifecycleState](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubAppLifecycleState-class.html)               | Subscribes to the `AppLifecycleState` and return its value.     |
 | [SubTransformationController](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubTransformationController-class.html) | Creates and disposes a `TransformationController`.              |
 | [SubPlatformBrightness](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubPlatformBrightness-class.html)             | Subscribes to the platform's `Brightness` and return its value. |
+
+### Other Subs
+
+Other miscellaneous subs.
+
+| Name                                                                                             | Description                                  |
+| ------------------------------------------------------------------------------------------------ | -------------------------------------------- |
+| [SubValue](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubValue-class.html)     | The base class for all Subs.                 |
+| [SubDefault](https://pub.dev/documentation/flutter_sub/latest/flutter_sub/SubDefault-class.html) | Creates a default Value if none is provided. |
 
 ### Hook-alikes
 
