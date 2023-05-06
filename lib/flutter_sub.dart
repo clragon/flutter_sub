@@ -3,6 +3,7 @@ library flutter_sub;
 
 export 'src/sub_animation.dart';
 export 'src/sub_app_lifecycle_state.dart';
+export 'src/sub_default.dart';
 export 'src/sub_effect.dart';
 export 'src/sub_focus.dart';
 export 'src/sub_future.dart';
