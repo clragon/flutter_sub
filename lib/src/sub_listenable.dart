@@ -83,17 +83,18 @@ class _SubListenerState {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is _SubListenerState &&
-          runtimeType == other.runtimeType &&
+          initialize == other.initialize &&
           listenable == other.listenable &&
-          listener == other.listener &&
-          initialize == other.initialize;
+          listener == other.listener;
 
+  // coverage:ignore-start
   @override
   int get hashCode => Object.hash(
         listenable,
         listener,
         initialize,
       );
+  // coverage:ignore-end
 }
 
 /// A [SubValue] which holds a Value that is a descendant of [ChangeNotifier].
