@@ -140,7 +140,7 @@ To see the full implementation, you can check out [SubValueState](./lib/src/sub_
 
 ## Hooks
 
-You might have notived that this library has certain similarities to [flutter_hooks](https://pub.dev/packages/flutter_hooks).  
+You might have noticed that this library has certain similarities to [flutter_hooks](https://pub.dev/packages/flutter_hooks).  
 The primary purpose of this library is to provide convenient interstate relationships, but while building it, we noticed that it also allows the creation of easy resuable `State` pieces.
 
 As such, it can fill a similar role to hooks, while having some advantages:
@@ -160,7 +160,7 @@ The way Subs are built also comes with one "disadvantage":
 Because Subs are Widgets, they will increase the nesting of your tree, unlike hooks which are completely flat.
 
 We think Subs can be a neat alternative to hooks, so there is a Sub equivalent to many hooks from `flutter_hooks`.
-Replace your `useSomething` with `SubSomething` and youre good to go!
+Replace your `useSomething` with `SubSomething` and you're good to go!
 
 Some hooks may not have an equivalent Sub or the Sub may function slightly differently because it made more sense that way.
 
