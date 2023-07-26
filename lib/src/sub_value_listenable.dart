@@ -38,7 +38,7 @@ class SubValueListener<T> extends SubListener {
   }) : super(
           listenable: listenable,
           listener: listener != null ? () => listener(listenable.value) : null,
-          child: ValueListenableBuilder<T>(
+          builder: (context) => ValueListenableBuilder<T>(
             valueListenable: listenable,
             builder: (context, value, child) => builder(context, value),
           ),

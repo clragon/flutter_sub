@@ -23,7 +23,7 @@ class SubListener extends SubValue<_SubListenerState> {
   /// - The optional [listener] is called when the listenable notifies.
   /// - If [initialize] is true, then [listener] is also called once this Widget is built for the first time.
   SubListener({
-    required Widget child,
+    required WidgetBuilder builder,
     required Listenable listenable,
     VoidCallback? listener,
     bool initialize = false,
@@ -33,9 +33,18 @@ class SubListener extends SubValue<_SubListenerState> {
             listener: listener,
             initialize: initialize,
           ),
+          update: (state) {
+            if (state.listener != listener) {
+              return _SubListenerState(
+                listenable: listenable,
+                listener: listener,
+              );
+            }
+            return state;
+          },
           keys: [listenable],
           dispose: (value) => value.dispose(),
-          builder: (context, _) => child,
+          builder: (context, _) => builder(context),
         );
 }
 
@@ -69,6 +78,22 @@ class _SubListenerState {
     if (listener == null) return;
     listenable.removeListener(listener!);
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is _SubListenerState &&
+          runtimeType == other.runtimeType &&
+          listenable == other.listenable &&
+          listener == other.listener &&
+          initialize == other.initialize;
+
+  @override
+  int get hashCode => Object.hash(
+        listenable,
+        listener,
+        initialize,
+      );
 }
 
 /// A [SubValue] which holds a Value that is a descendant of [ChangeNotifier].
