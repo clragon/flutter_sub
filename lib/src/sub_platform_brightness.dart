@@ -18,7 +18,8 @@ class SubPlatformBrightness extends SubValueNotifier<Brightness> {
     super.listener,
     super.initialize,
   }) : super(
-          initialData: WidgetsBinding.instance.window.platformBrightness,
+          initialData:
+              WidgetsBinding.instance.platformDispatcher.platformBrightness,
           builder: (context, notifier) => builder(context, notifier.value),
         );
 
@@ -33,6 +34,7 @@ class _SubPlatformBrightnessState
   @override
   void didChangePlatformBrightness() {
     super.didChangePlatformBrightness();
-    value?.value = WidgetsBinding.instance.window.platformBrightness;
+    value?.value =
+        WidgetsBinding.instance.platformDispatcher.platformBrightness;
   }
 }
