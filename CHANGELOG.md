@@ -1,3 +1,8 @@
+## 3.0.0
+
+- Breaking: Replaced child in SubListener with builder (This is necessary to rebuild)
+- Upgraded to dart 3.0.0
+
 ## 2.1.1
 
 - Fixed SubStream not cancelling subscriptions fully
