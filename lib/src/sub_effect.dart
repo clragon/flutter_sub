@@ -48,6 +48,8 @@ class SubEffect extends SubValue<VoidCallback?> {
           create: effect,
           builder: (context, value) => child,
           dispose: (value) => value?.call(),
-          keys: keys ?? [UniqueKey()],
+          // by using a plain object as a key as default,
+          // we ensure that the effect is called on every build.
+          keys: keys ?? [Object()],
         );
 }
